@@ -1,0 +1,58 @@
+/*
+There is a string, , of lowercase English letters that is repeated infinitely many times. Given an integer, n, find and print the number of letter a's in the first
+letters of the infinite string.
+Example
+The substring we consider is abcacabcac, the first characters of the infinite string. There are occurrences of a in the substring.
+*/
+
+long repeatedString(char* s, long n) {
+    long count = 0;
+    char *cptr = s;
+    long char_read = 0;
+    
+    if(!s){
+        return count;
+    }
+    //count the occurrence
+    while (*cptr!='\0' && char_read<n) {
+        if(*cptr == 'a'){
+            count++;
+        }
+        cptr++;
+        char_read++;
+    }
+    
+    //when len(s) > n
+    if(strlen(s) >= n){
+        return count;
+    }
+    else {
+        //count by multiplying
+        if(0 == n%strlen(s)){
+            count = count * n;
+        }
+        else {
+            count = count * (n/strlen(s));
+            //count remaining
+            cptr = s;
+            char_read = 0;
+            while (char_read < n%strlen(s)){
+                if(*cptr == 'a'){
+                    count++;
+                }
+                cptr++;
+                char_read++;
+            }
+        }
+    }
+    return count;
+}
+
+int main()
+{
+    long n = 10;
+    char s[100] = "a";
+    long result = repeatedString(s, n);
+    printf("\nresult: %0.1ld\n", result);
+    return 0;
+}
